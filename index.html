@@ -1006,14 +1006,32 @@
   });
   document.getElementById('backToShippingBtn').addEventListener('click', showShippingStep);
 
-  document.getElementById('completeOrderBtn').addEventListener('click', () => {
-    const carrier = CARRIERS.find(c => c.id === checkoutCarrier);
-    const payment = PAYMENTS.find(p => p.id === checkoutPayment);
-    showToast(`Tack för ditt köp! Frakt: ${carrier.label} · Betalning: ${payment.label}. (Simulerat — ingen riktig betalning har gjorts.)`);
-    cart = [];
-    renderCart();
-    closeCheckout();
-    goTo('home');
+  document.getElementById('completeOrderBtn').addEventListener('click', async () => {
+    const btn = document.getElementById('completeOrderBtn');
+    btn.disabled = true;
+    btn.textContent = 'Skickar dig till betalning …';
+
+    try {
+      const response = await fetch('/.netlify/functions/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cart, carrier: checkoutCarrier }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.url) {
+        throw new Error(data.error || 'Något gick fel hos betalningsleverantören.');
+      }
+
+      // Skickar besökaren vidare till Stripes säkra betalsida.
+      window.location.href = data.url;
+    } catch (err) {
+      console.error(err);
+      showToast('Kunde inte starta betalningen. Försök igen om en stund.');
+      btn.disabled = false;
+      btn.textContent = 'Slutför köp';
+    }
   });
 
   // ---------- Toast ----------
