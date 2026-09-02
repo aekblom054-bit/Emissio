@@ -609,7 +609,8 @@
   // ---------- Data ----------
   const CARRIERS = [
     { id: 'dhl', label: 'DHL', meta: '2–4 vardagar', price: 79 },
-    { id: 'postnord', label: 'PostNord', meta: '3–5 vardagar', price: 59 },
+    { id: 'postnord',label: 'PostNord', meta: '3–5 vardagar', price: 59 },
+    { id: 'gratis', label: 'Gratis frakt (test)', meta: 'Endast för test', price: 0 },
   ];
   const PAYMENTS = [
     { id: 'klarna', label: 'Klarna' },
@@ -620,6 +621,15 @@
   const SIZES = ['S','M','L'];
 
   const PRODUCTS = [
+        {
+      id: 'test',
+      name: 'TEST',
+      title: 'Testprodukt',
+      desc: 'Detta är en testprodukt för 1 kr, används för att testa köpflödet.',
+      price: 1,
+      color: '#888888',
+      limited: false
+    },
     {
       id: 'signature',
       name: 'Signature',
