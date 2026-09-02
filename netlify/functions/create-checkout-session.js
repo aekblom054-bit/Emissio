@@ -32,7 +32,7 @@ exports.handler = async (event) => {
     }));
 
     // Fraktkostnad som en egen rad, baserat på valt fraktbolag.
-    const shippingCosts = { dhl: 79, postnord: 59 };
+    const shippingCosts = { dhl: 79, postnord: 59,TrulsMammaKommerMedPaketet: 0 };
     const shippingLabel = { dhl: 'Frakt (DHL)', postnord: 'Frakt (PostNord)' };
     const shippingPrice = shippingCosts[carrier] ?? 0;
 
