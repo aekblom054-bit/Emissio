@@ -32,8 +32,8 @@ exports.handler = async (event) => {
     }));
 
     // Fraktkostnad som en egen rad, baserat på valt fraktbolag.
-    const shippingCosts = { dhl: 79, postnord: 59, gratis: 0 };
-    const shippingLabel = { dhl: 'Frakt (DHL)', postnord: 'Frakt (PostNord)', gratis: 'Frakt (gratis)' };
+    const shippingCosts = { dhl: 79, postnord: 59 };
+    const shippingLabel = { dhl: 'Frakt (DHL)', postnord: 'Frakt (PostNord)' };
     const shippingPrice = shippingCosts[carrier] ?? 0;
     if (shippingPrice > 0) {
       line_items.push({
